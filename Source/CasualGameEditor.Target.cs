@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class CasualGameEditorTarget : TargetRules
 {
-	public CasualGameEditorTarget( TargetInfo Target) : base(Target)
+	public CasualGameEditorTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V2;

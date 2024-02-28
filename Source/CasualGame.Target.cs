@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class CasualGameTarget : TargetRules
 {
-	public CasualGameTarget( TargetInfo Target) : base(Target)
+	public CasualGameTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;

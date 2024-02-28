@@ -4,14 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "CasualGameGameModeBase.generated.h"
+#include "CasualGameGameMode.generated.h"
 
-/**
- * 
- */
-UCLASS()
-class CASUALGAME_API ACasualGameGameModeBase : public AGameModeBase
+UCLASS(minimalapi)
+class ACasualGameGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	ACasualGameGameMode();
 };
+
+
+
