@@ -8,7 +8,7 @@
 
 UCLASS(Blueprintable)
 class TESTFUNCTIONLIBRARY_API AMyTestActor : public AActor
-{
+{ 
 	GENERATED_BODY()
 	
 public:	
@@ -35,5 +35,23 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, Category = TopCategory, meta = (DisplayName = "BPNativeEvent2"))
 		void BPNativeEvent1();
+
+
+public:
+
+	UPROPERTY(EditDefaultsOnly, Category = "TopCate | SubCate")
+		int32 BaseData;
+
+	UPROPERTY(EditAnywhere, meta = (Bitmask), Category = "TopCate")
+		int32 BasicBits;
+
+	UPROPERTY(EditAnywhere,Category = "TopCate")
+		FString BasicBits2;
+
+	UPROPERTY(BlueprintReadWrite, Category = "TopCate")
+		int32 BaseData1;
+
+	UPROPERTY(BlueprintReadOnly, Category = "TopCate")
+		int32 BaseData4;
 
 };
