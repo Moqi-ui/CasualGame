@@ -39,6 +39,11 @@ class ACasualGameCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<UDamageType> MyDamageType;
+
+
+
 public:
 	ACasualGameCharacter();
 	
@@ -64,5 +69,17 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+
+protected:
+	UFUNCTION()
+		void OnHealthChanged(UHealthComponent* HealthComp, float Health, float DamageAmount, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+
+	UFUNCTION()
+		void DamagePlayerCharacter();
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+		class UHealthComponent* HealthComponent;
 };
 

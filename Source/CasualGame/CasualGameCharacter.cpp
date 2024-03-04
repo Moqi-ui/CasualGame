@@ -9,7 +9,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-
+#include "HealthComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ACasualGameCharacter
@@ -49,6 +50,9 @@ ACasualGameCharacter::ACasualGameCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+
 }
 
 void ACasualGameCharacter::BeginPlay()
@@ -64,6 +68,8 @@ void ACasualGameCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	HealthComponent->OnHealthChanged.AddDynamic(this, &ACasualGameCharacter::OnHealthChanged);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -85,6 +91,8 @@ void ACasualGameCharacter::SetupPlayerInputComponent(class UInputComponent* Play
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACasualGameCharacter::Look);
 
 	}
+
+	PlayerInputComponent->BindAction("OnDamagePressed", IE_Pressed, this, &ACasualGameCharacter::DamagePlayerCharacter);
 
 }
 
@@ -124,6 +132,19 @@ void ACasualGameCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+void ACasualGameCharacter::OnHealthChanged(UHealthComponent* HealthComp, float Health, float DamageAmount, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
+{
+	if (Health <= 0.0f)
+	{
+		Destroy();
+	}
+	UE_LOG(LogTemp, Warning, TEXT("The Player's Current Health is: %f"), Health);
+}
+
+void ACasualGameCharacter::DamagePlayerCharacter()
+{
+	UGameplayStatics::ApplyDamage(this, 20.0f, GetInstigatorController(), this, MyDamageType);
+}
 
 
 
